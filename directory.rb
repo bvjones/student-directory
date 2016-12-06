@@ -1,4 +1,14 @@
 @students = []
+def save_students
+  file = File.open("students.csv", "w")
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort], student[:hobby], student[:birthplace], student[:height]]
+
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+end
 
 def interactive_menu
   loop do
@@ -13,6 +23,8 @@ def process(selection)
       students = input_students
     when "2"
       show_students
+    when "3"
+      save_students
     when "9"
       exit
     else
@@ -24,6 +36,7 @@ def print_menu
     puts "Please select one of the following -"
     puts "1. Input students"
     puts "2. Read and Save"
+    puts "3. Save the list to students.csv"
     puts "9. Exit"
   end
 
@@ -40,8 +53,7 @@ end
 
 def print_students_list()
   @students.each_with_index do |student, i|
-    puts "Here's our list of students - "
-    puts "#{i}: #{student[:name]} (#{student[:cohort]} cohort) (Favorite hobby: #{student[:hobby]}) (from: #{student[:birthplace]}) (height :#{student[:height]})"
+        puts "#{i}: #{student[:name]} (#{student[:cohort]} cohort) (Favorite hobby: #{student[:hobby]}) (from: #{student[:birthplace]}) (height :#{student[:height]})"
   end
 end
 
