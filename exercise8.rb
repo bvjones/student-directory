@@ -5,6 +5,7 @@ end
 
 def print(students)
   students.each_with_index do |student, i|
+    puts "Here's our list of students - "
     puts "#{i}: #{student[:name]} (#{student[:cohort]} cohort) (Favorite hobby: #{student[:hobby]}) (from: #{student[:birthplace]}) (height :#{student[:height]})"
   end
 end
@@ -88,6 +89,14 @@ def list_by_cohort(students)
   end
 end
 
+def no_students(students)
+  if students.empty?
+    puts "Before coninuing please enter students details"
+    input_students
+  else
+    print(students)
+  end
+end
 #calling methods
 students = input_students
 print_header
@@ -97,5 +106,5 @@ student_name_length(students)
 puts "-" * 8
 list_by_cohort(students)
 puts "-" * 8
-print(students)
+no_students(students)
 print_footer(students)
