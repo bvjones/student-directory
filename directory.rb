@@ -10,8 +10,20 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort, hobby, birthplace, height = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym, hobby: hobby, birthplace: birthplace, height: height}
@@ -21,7 +33,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -79,11 +91,11 @@ def input_students
   puts "To finish, just hit return twice"
 
   #empty array
-  name = gets.gsub("\n", "")
+  name = STDIN.gets.gsub("\n", "")
 
   while !name.empty? do
       puts "Please enter #{name}'s cohort"
-      cohort = gets.gsub("\n", "")
+      cohort = STDIN.gets.gsub("\n", "")
       cohort.capitalize!
       cohort.to_sym
       if cohort == ""
@@ -93,13 +105,13 @@ def input_students
       end
 
       puts "Please enter #{name}'s favorite hobby"
-      hobby = gets.gsub("\n", "")
+      hobby = STDIN.gets.gsub("\n", "")
 
       puts "Please enter #{name}'s country of birth"
-      birthplace = gets.gsub("\n", "")
+      birthplace = STDIN.gets.gsub("\n", "")
 
       puts "Finally please enter #{name}'s height"
-      height = gets.gsub("\n", "")
+      height = STDIN.gets.gsub("\n", "")
       #adding the student hash to array
       @students << {name: name, cohort: cohort, hobby: hobby, birthplace: birthplace, height: height}
       if @students.count < 2
@@ -109,7 +121,7 @@ def input_students
       end
       puts "Please enter the name of the next student"
       puts "Press return twice if you don't wish to continue"
-    name = gets.gsub("\n", "")
+    name = STDIN.gets.gsub("\n", "")
   end
   # returning the array
   @students
@@ -117,7 +129,7 @@ end
 
 def search_students()
   puts "Please enter the first letter of the student you would like to search for"
-  search_letter = gets.chomp.capitalize
+  search_letter = STDIN.gets.chomp.capitalize
   search_student_letter =  @students.select { |student| student[:name][0] == search_letter}
 
   puts "Here are the students begining with: #{search_letter}"
