@@ -4,20 +4,20 @@ def print_header
 end
 
 def print(students)
-  students.each_with_index do |student, x|
-    puts "#{x}: #{student[:name]} (#{student[:cohort]} cohort) (Favorite hobby: #{student[:hobby]}) (from: #{student[:birthplace]}) (height :#{student[:height]})".center(40)
+  students.each_with_index do |student, i|
+    puts "#{i}: #{student[:name]} (#{student[:cohort]} cohort) (Favorite hobby: #{student[:hobby]}) (from: #{student[:birthplace]}) (height :#{student[:height]})"
   end
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students".center(40)
+  puts "Overall, we have #{students.count} great students"
 end
 
 def input_students
 
-    cohorts = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
-  puts "Please enter the names of the students".center(40)
-  puts "To finish, just hit return twice".center(40)
+  cohorts = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return twice"
 
   #empty array
   students = []
@@ -42,10 +42,11 @@ def input_students
 
       puts "Finally please enter #{name}'s height"
       height = gets.chomp
-    #adding the student hash to array
-    students << {name: name, cohort: cohort, hobby: hobby, birthplace: birthplace, height: height}
-    puts "Now we have #{students.count} students".center(40)
-
+      #adding the student hash to array
+      students << {name: name, cohort: cohort, hobby: hobby, birthplace: birthplace, height: height}
+      puts "Now we have #{students.count} students"
+      puts "Please enter the name of the next student"
+      puts "Press return twice if you don't wish to continue"
     name = gets.chomp
   end
   # returning the array
@@ -60,25 +61,26 @@ def search_students(students)
   puts "Here are the students begining with: #{search_letter}"
 
   search_student_letter.each_with_index do |student, i|
-    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(40)
+    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
 def student_name_length(students)
-  puts "We have removed all of the students with less than 12 characters in their names".center(40)
+  puts "We have removed all of the students with less than 12 characters in their names"
   student_length = students.select { |student| student[:name].length < 12 }
-# loop for the amount of students in the array
   student_length.each_with_index do |student, i|
-    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(40)
+    puts "#{i}: #{student[:name]} (#{student[:cohort]} cohort) (Favorite hobby: #{student[:hobby]}) (from: #{student[:birthplace]}) (height :#{student[:height]})"
   end
 end
 
 def list_by_cohort(students)
+  students_by_cohort = students.select { |student| student[:cohort] ==
+    "January" }
 
-  students_by_cohort = students.select { |cohort| :cohort == "January"}
+  puts "Here are all the students listed on the January cohort -"
 
   students_by_cohort.each_with_index do |student, i|
-    puts "#{i+1}.(#{student[:cohort]} cohort) #{student[:name]}".center(40)
+    puts "#{i+1}.#{student[:name]}"
   end
 end
 
@@ -90,7 +92,6 @@ puts "-" * 8
 student_name_length(students)
 puts "-" * 8
 list_by_cohort(students)
-puts "-" * 8
-
-print(students)
-print_footer(students)
+# puts "-" * 8
+# print(students)
+# print_footer(students)
