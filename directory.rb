@@ -1,25 +1,36 @@
-def interactive_menu
-  students = []
-  loop do
-    puts "Please select one of the following -"
-    puts "1. Input students"
-    puts "2. Read and Save"
-    puts "9. Exit"
+@students = []
 
-    selection = gets.chomp
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+def process(selection)
     case selection
     when "1"
       students = input_students
     when "2"
-      print_header
-      print(students)
-      print_footer(students)
+      show_students
     when "9"
       exit
     else
       puts "I don't know what you mean, please try again"
     end
+end
+
+def print_menu
+    puts "Please select one of the following -"
+    puts "1. Input students"
+    puts "2. Read and Save"
+    puts "9. Exit"
   end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
 end
 
 def print_header
@@ -27,15 +38,15 @@ def print_header
   puts "-----------------".center(40)
 end
 
-def print(students)
-  students.each_with_index do |student, i|
+def print_students_list()
+  @students.each_with_index do |student, i|
     puts "Here's our list of students - "
     puts "#{i}: #{student[:name]} (#{student[:cohort]} cohort) (Favorite hobby: #{student[:hobby]}) (from: #{student[:birthplace]}) (height :#{student[:height]})"
   end
 end
 
-def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+def print_footer()
+  puts "Overall, we have #{@students.count} great students"
 end
 
 def input_students
@@ -45,7 +56,6 @@ def input_students
   puts "To finish, just hit return twice"
 
   #empty array
-  students = []
   name = gets.gsub("\n", "")
 
   while !name.empty? do
@@ -68,24 +78,24 @@ def input_students
       puts "Finally please enter #{name}'s height"
       height = gets.gsub("\n", "")
       #adding the student hash to array
-      students << {name: name, cohort: cohort, hobby: hobby, birthplace: birthplace, height: height}
-      if students.count < 2
-      puts "Now we have #{students.count} student"
+      @students << {name: name, cohort: cohort, hobby: hobby, birthplace: birthplace, height: height}
+      if @students.count < 2
+      puts "Now we have #{@students.count} student"
       else
-      puts "Now we have #{students.count} students"
+      puts "Now we have #{@students.count} students"
       end
       puts "Please enter the name of the next student"
       puts "Press return twice if you don't wish to continue"
     name = gets.gsub("\n", "")
   end
   # returning the array
-  students
+  @students
 end
 
-def search_students(students)
+def search_students()
   puts "Please enter the first letter of the student you would like to search for"
   search_letter = gets.chomp.capitalize
-  search_student_letter =  students.select { |student| student[:name][0] == search_letter}
+  search_student_letter =  @students.select { |student| student[:name][0] == search_letter}
 
   puts "Here are the students begining with: #{search_letter}"
 
@@ -94,16 +104,16 @@ def search_students(students)
   end
 end
 
-def student_name_length(students)
+def student_name_length()
   puts "We have removed all of the students with less than 12 characters in their names"
-  student_length = students.select { |student| student[:name].length < 12 }
+  student_length = @students.select { |student| student[:name].length < 12 }
   student_length.each_with_index do |student, i|
     puts "#{i}: #{student[:name]} (#{student[:cohort]} cohort) (Favorite hobby: #{student[:hobby]}) (from: #{student[:birthplace]}) (height :#{student[:height]})"
   end
 end
 
-def list_by_cohort(students)
-  students_by_cohort = students.select { |student| student[:cohort] ==
+def list_by_cohort()
+  students_by_cohort = @students.select { |student| student[:cohort] ==
     "January" }
 
   puts "Here are all the students listed on the January cohort -"
@@ -113,8 +123,8 @@ def list_by_cohort(students)
   end
 end
 
-def no_students(students)
-  if students.empty?
+def no_students()
+  if @students.empty?
     puts "Before coninuing please enter students details"
     input_students
   else
