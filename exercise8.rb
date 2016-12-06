@@ -21,11 +21,11 @@ def input_students
 
   #empty array
   students = []
-  name = gets.chomp
+  name = gets.gsub("\n", "")
 
   while !name.empty? do
       puts "Please enter #{name}'s cohort"
-      cohort = gets.chomp
+      cohort = gets.gsub("\n", "")
       cohort.capitalize!
       cohort.to_sym
       if cohort == ""
@@ -35,13 +35,13 @@ def input_students
       end
 
       puts "Please enter #{name}'s favorite hobby"
-      hobby = gets.chomp
+      hobby = gets.gsub("\n", "")
 
       puts "Please enter #{name}'s country of birth"
-      birthplace = gets.chomp
+      birthplace = gets.gsub("\n", "")
 
       puts "Finally please enter #{name}'s height"
-      height = gets.chomp
+      height = gets.gsub("\n", "")
       #adding the student hash to array
       students << {name: name, cohort: cohort, hobby: hobby, birthplace: birthplace, height: height}
       if students.count < 2
@@ -51,7 +51,7 @@ def input_students
       end
       puts "Please enter the name of the next student"
       puts "Press return twice if you don't wish to continue"
-    name = gets.chomp
+    name = gets.gsub("\n", "")
   end
   # returning the array
   students
@@ -96,6 +96,6 @@ puts "-" * 8
 student_name_length(students)
 puts "-" * 8
 list_by_cohort(students)
-# puts "-" * 8
-# print(students)
-# print_footer(students)
+puts "-" * 8
+print(students)
+print_footer(students)
