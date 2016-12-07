@@ -40,14 +40,24 @@ end
 def process(selection)
     case selection
     when "1"
+      puts "You selected #{selection}."
+      puts "Entering student information..."
       students = input_students
     when "2"
+      "You selected #{selection}."
+      puts "Here's a list of students..."
       show_students
     when "3"
+      puts "You selected #{selection}."
+      puts "Saving students to Students.CSV..."
       save_students
     when "4"
+      puts "You selected #{selection}."
+      puts "Loading students from Students.CSV..."
       load_students
     when "9"
+      puts "You selected #{selection}."
+      puts "Exiting program..."
       exit
     else
       puts "I don't know what you mean, please try again"
