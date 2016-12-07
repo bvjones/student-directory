@@ -1,8 +1,10 @@
 @students = []
 
 def save_students
-  file = File.open("students.csv", "w")
-  @students.each do |student|
+    puts "Please enter a filename to save the students to -"
+    filename = gets.chomp
+    file = File.open(filename, "w")
+    @students.each do |student|
     student_data = [student[:name], student[:cohort], student[:hobby], student[:birthplace], student[:height]]
     csv_line = student_data.join(",")
     file.puts csv_line
@@ -23,9 +25,12 @@ def try_load_students
 end
 
 def load_students(filename = "students.csv")
+  puts "Please enter a filename to save the students to"
+  filename = gets.chomp
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort, hobby, birthplace, height = line.chomp.split(',')
+    @students << {name: name, cohort: cohort, hobby: hobby, birthplace: birthplace, height: height}
   end
   file.close
 end
@@ -49,11 +54,11 @@ def process(selection)
       show_students
     when "3"
       puts "You selected #{selection}."
-      puts "Saving students to Students.CSV..."
+      puts "Saving students to file..."
       save_students
     when "4"
       puts "You selected #{selection}."
-      puts "Loading students from Students.CSV..."
+      puts "Loading students from file..."
       load_students
     when "9"
       puts "You selected #{selection}."
@@ -68,8 +73,8 @@ def print_menu
     puts "Please select one of the following -"
     puts "1. Input students"
     puts "2. Read and Save"
-    puts "3. Save the list to students.csv"
-    puts "4. Load the list from students.csv"
+    puts "3. Save the list to file"
+    puts "4. Load the list from file"
     puts "9. Exit"
   end
 
@@ -123,6 +128,7 @@ def input_students
       puts "Finally please enter #{name}'s height"
       height = STDIN.gets.gsub("\n", "")
       #adding the student hash to array
+      @students << {name: name, cohort: cohort, hobby: hobby, birthplace: birthplace, height: height}
       if @students.count < 2
       puts "Now we have #{@students.count} student"
       else

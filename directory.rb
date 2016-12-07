@@ -1,4 +1,5 @@
 @students = []
+
 def save_students
   file = File.open("students.csv", "w")
   @students.each do |student|
