@@ -74,6 +74,7 @@ def process(selection)
 end
 
 def print_menu
+    puts "Executable file: #{$0}"
     puts "Please select one of the following -"
     puts "1. Input students"
     puts "2. Read and Save"
