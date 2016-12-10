@@ -1,5 +1,9 @@
 @students = []
 
+def initialize_students(name, cohort, hobby, birthplace, height)
+      @students << {name: name, cohort: cohort, hobby: hobby, birthplace: birthplace, height: height}
+end
+
 def save_students
     puts "Please enter a filename to save the students to -"
     filename = gets.chomp
@@ -25,12 +29,12 @@ def try_load_students
 end
 
 def load_students(filename = "students.csv")
-  puts "Please enter a filename to save the students to"
+  puts "Please enter a filename to load the students to..."
   filename = gets.chomp
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort, hobby, birthplace, height = line.chomp.split(',')
-    @students << {name: name, cohort: cohort, hobby: hobby, birthplace: birthplace, height: height}
+  initialize_students(name, cohort, hobby, birthplace, height)
   end
   file.close
 end
@@ -128,7 +132,9 @@ def input_students
       puts "Finally please enter #{name}'s height"
       height = STDIN.gets.gsub("\n", "")
       #adding the student hash to array
-      @students << {name: name, cohort: cohort, hobby: hobby, birthplace: birthplace, height: height}
+
+      initialize_students(name, cohort, hobby, birthplace, height)
+
       if @students.count < 2
       puts "Now we have #{@students.count} student"
       else
