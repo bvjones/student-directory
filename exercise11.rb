@@ -7,7 +7,7 @@ end
 def save_students
     puts "Please enter a filename to save the students to -"
     filename = gets.chomp
-    file = File.open(filename, "w")
+    CSV.open(filename, "w")
     @students.each do |student|
     student_data = [student[:name], student[:cohort], student[:hobby], student[:birthplace], student[:height]]
     csv_line = student_data.join(",")
@@ -31,7 +31,7 @@ end
 def load_students(filename = "students.csv")
   puts "Please enter a filename to load the students to..."
   filename = gets.chomp
-  file = File.open(filename, "r")
+  file = CSV.open(filename, "r")
   file.readlines.each do |line|
   name, cohort, hobby, birthplace, height = line.chomp.split(',')
   initialize_students(name, cohort, hobby, birthplace, height)
